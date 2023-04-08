@@ -1,0 +1,69 @@
+@mixin card-common {
+  width: 410px;
+  height: 225px;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+}
+
+$card-shadow: drop-shadow(6px 4px 22px #00000022);
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  color: white;
+  font-weight: lighter;
+
+  .card-front,
+  .card-back {
+    @include card-common;
+  }
+
+  .card-front {
+    background-image: url("../../../assets/bg-card-front.png");
+    margin-left: 120px;
+    filter: $card-shadow;
+    padding: 25px 25px 32px;
+
+    .info-container {
+      height: 73%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 50px;
+      letter-spacing: 2px;
+    }
+
+    .card-number {
+      font-size: 27px;
+      letter-spacing: 3px;
+    }
+
+    .card-logo {
+      height: 27%;
+    }
+
+    .name-date {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+
+      .name {
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .card-back {
+    background-image: url("../../../assets/bg-card-back.png");
+    margin-left: 220px;
+    filter: $card-shadow;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 53px;
+    letter-spacing: 2px;
+  }
+}
