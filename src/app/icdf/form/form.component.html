@@ -1,0 +1,51 @@
+<form [formGroup]="cardInfoGroup">
+  <div class="form-control">
+    <label for="cardName">Cardholder Name</label>
+    <input
+      placeholder="e.g. Jane Appleseed"
+      formControlName="cardName"
+      id="cardName"
+      type="text"
+    />
+  </div>
+  <div class="form-control">
+    <label for="cardNumber">Card Number</label>
+    <input
+      placeholder="e.g. 1234 5678 9123 0000"
+      formControlName="cardNumber"
+      id="cardNumber"
+      type="text"
+    />
+  </div>
+  <div class="cvc-and-exp">
+    <div formGroupName="expirationDate">
+      <label>Exp. Date (MM/YY)</label>
+      <div class="exp-date">
+        <input
+          formControlName="month"
+          id="month"
+          type="text"
+          placeholder="MM"
+        />
+        <input formControlName="year" id="year" type="text" placeholder="YY" />
+      </div>
+    </div>
+
+    <div class="form-control">
+      <label for="cvc">CVC</label>
+      <input
+        placeholder="e.g. 123"
+        class="cvc"
+        formControlName="cvc"
+        id="cvc"
+        type="text"
+      />
+    </div>
+  </div>
+  <div *ngIf="true" class="form-button">
+    <button>Confirm</button>
+  </div>
+  <div *ngIf="false" class="continue-button">
+    <button>Continue</button>
+  </div>
+</form>
