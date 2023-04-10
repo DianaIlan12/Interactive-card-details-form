@@ -6,6 +6,7 @@ form {
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 380px;
   align-items: center;
   box-sizing: border-box;
   padding: 55px 0;
@@ -106,7 +107,7 @@ form {
 
   .form-button,
   .continue-button {
-    width: 423px;
+    width: 100%;
 
     button {
       width: 100%;
