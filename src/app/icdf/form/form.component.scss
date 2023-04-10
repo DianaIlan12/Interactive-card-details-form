@@ -1,12 +1,11 @@
 $base-color: hsl(278, 68%, 11%);
 $placeholder-color: hsl(270, 3%, 87%);
+$error-color: hsl(0, 100%, 66%);
 
 form {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   height: 100%;
-  width: 380px;
   align-items: center;
   box-sizing: border-box;
   padding: 55px 0;
@@ -19,6 +18,12 @@ form {
     box-sizing: border-box;
     width: 100%;
     padding: 0 13px;
+    margin-bottom: 20px;
+    position: relative;
+
+    &:focus {
+      border: 1px solid $base-color;
+    }
 
     &::placeholder {
       color: $placeholder-color;
@@ -38,6 +43,13 @@ form {
     width: 100%;
   }
 
+  .error {
+    border: 1px solid $error-color;
+    &:focus {
+      border: 1px solid $error-color;
+    }
+  }
+
   .exp-date {
     display: flex;
     gap: 15px;
@@ -52,15 +64,49 @@ form {
     display: flex;
     flex-direction: column;
     width: 100%;
+    position: relative;
+    margin-bottom: 20px;
 
     .cvc {
       width: 100%;
     }
   }
 
+  .error-message {
+    color: $error-color;
+    position: absolute;
+    font-size: 12px;
+    bottom: 0;
+  }
+
+  .complete {
+    gap: 22px;
+    padding-top: 50px;
+    margin-bottom: 50px;
+  }
+  .complete,
+  .complete-texts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    p:first-child {
+      font-size: 30px;
+      text-transform: uppercase;
+      color: $base-color;
+      margin: 0;
+      margin-bottom: 15px;
+    }
+    p:last-child {
+      font-size: 14px;
+      color: hsl(279, 6%, 55%);
+      margin: 0;
+    }
+  }
+
   .form-button,
   .continue-button {
-    width: 100%;
+    width: 423px;
 
     button {
       width: 100%;
@@ -71,7 +117,7 @@ form {
       border-radius: 7px;
       cursor: pointer;
 
-      &:hover {
+      &:not(:disabled):hover {
         background-color: hsla(278, 68%, 11%, 0.815);
       }
     }

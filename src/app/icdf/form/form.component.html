@@ -1,51 +1,143 @@
-<form [formGroup]="cardInfoGroup">
-  <div class="form-control">
-    <label for="cardName">Cardholder Name</label>
-    <input
-      placeholder="e.g. Jane Appleseed"
-      formControlName="cardName"
-      id="cardName"
-      type="text"
-    />
-  </div>
-  <div class="form-control">
-    <label for="cardNumber">Card Number</label>
-    <input
-      placeholder="e.g. 1234 5678 9123 0000"
-      formControlName="cardNumber"
-      id="cardNumber"
-      type="text"
-    />
-  </div>
-  <div class="cvc-and-exp">
-    <div formGroupName="expirationDate">
-      <label>Exp. Date (MM/YY)</label>
-      <div class="exp-date">
-        <input
-          formControlName="month"
-          id="month"
-          type="text"
-          placeholder="MM"
-        />
-        <input formControlName="year" id="year" type="text" placeholder="YY" />
-      </div>
-    </div>
-
+<form [formGroup]="cardInfoGroup" (ngSubmit)="onSubmit()">
+  <div *ngIf="!formGroupValid">
     <div class="form-control">
-      <label for="cvc">CVC</label>
+      <label for="cardName">Cardholder Name</label>
       <input
-        placeholder="e.g. 123"
-        class="cvc"
-        formControlName="cvc"
-        id="cvc"
+        [class.error]="
+          (cardInfoGroup.get('cardName')?.invalid &&
+            cardInfoGroup.get('cardName')?.touched) ||
+          (submitted && !cardInfoGroup.get('cardName')?.value)
+        "
+        maxlength="22"
+        placeholder="e.g. Jane Appleseed"
+        formControlName="cardName"
+        id="cardName"
         type="text"
       />
+      <div
+        class="error-message"
+        *ngIf="
+          (!cardInfoGroup.get('cardName')?.value &&
+            cardInfoGroup.get('cardName')?.touched) ||
+          (submitted && !cardInfoGroup.get('cardName')?.value)
+        "
+      >
+        Can't be blank
+      </div>
+    </div>
+    <div class="form-control">
+      <label for="cardNumber">Card Number</label>
+      <input
+        [class.error]="
+          (cardInfoGroup.get('cardNumber')?.invalid &&
+            cardInfoGroup.get('cardNumber')?.touched) ||
+          (submitted && !cardInfoGroup.get('cardNumber')?.value)
+        "
+        minlength="19"
+        (input)="formatCardNumber($event)"
+        placeholder="e.g. 1234 5678 9123 0000"
+        formControlName="cardNumber"
+        id="cardNumber"
+        type="text"
+      />
+      <div
+        *ngIf="
+          (cardInfoGroup.get('cardNumber')?.invalid &&
+            cardInfoGroup.get('cardNumber')?.touched) ||
+          (submitted && !cardInfoGroup.get('cardNumber')?.value)
+        "
+      >
+        <div
+          *ngIf="
+            !cardInfoGroup.get('cardNumber')?.value ||
+            (submitted && !cardInfoGroup.get('cardNumber')?.value)
+          "
+          class="error-message"
+        >
+          Can't be blank
+        </div>
+      </div>
+    </div>
+    <div class="cvc-and-exp">
+      <div formGroupName="expirationDate">
+        <label>Exp. Date (MM/YY)</label>
+        <div class="exp-date">
+          <input
+            [class.error]="
+              (cardInfoGroup.get('expirationDate')?.get('month')?.invalid &&
+                cardInfoGroup.get('expirationDate')?.get('month')?.touched) ||
+              (submitted &&
+                !cardInfoGroup.get('expirationDate')?.get('month')?.value)
+            "
+            (keyup)="autoFocusYear($event)"
+            maxlength="2"
+            formControlName="month"
+            id="month"
+            type="text"
+            placeholder="MM"
+          />
+          <input
+            [class.error]="
+              (cardInfoGroup.get('expirationDate')?.get('year')?.invalid &&
+                cardInfoGroup.get('expirationDate')?.get('year')?.touched) ||
+              (submitted &&
+                !cardInfoGroup.get('expirationDate')?.get('year')?.value)
+            "
+            #yearInput
+            formControlName="year"
+            maxlength="2"
+            id="year"
+            type="text"
+            placeholder="YY"
+          />
+        </div>
+      </div>
+
+      <div class="form-control">
+        <label for="cvc">CVC</label>
+        <input
+          [class.error]="
+            (cardInfoGroup.get('cvc')?.invalid &&
+              cardInfoGroup.get('cvc')?.touched) ||
+            (submitted && !cardInfoGroup.get('cvc')?.value)
+          "
+          maxlength="3"
+          min="3"
+          (input)="formatCardNumber($event)"
+          placeholder="e.g. 123"
+          class="cvc"
+          formControlName="cvc"
+          id="cvc"
+          type="text"
+        />
+        <div
+          *ngIf="
+            (cardInfoGroup.get('cvc')?.invalid &&
+              cardInfoGroup.get('cvc')?.touched) ||
+            (submitted && !cardInfoGroup.get('cvc')?.value)
+          "
+        >
+          <div
+            *ngIf="submitted && !cardInfoGroup.get('cvc')?.value"
+            class="error-message"
+          >
+            Can't be blank
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div *ngIf="true" class="form-button">
-    <button>Confirm</button>
+  <div class="complete" *ngIf="formGroupValid">
+    <div><img src="../../../assets/icon-complete.svg" alt="" fill /></div>
+    <div class="complete-texts">
+      <p>thank you!</p>
+      <p>We've added your card details</p>
+    </div>
   </div>
-  <div *ngIf="false" class="continue-button">
-    <button>Continue</button>
+  <div *ngIf="!formGroupValid" class="form-button">
+    <button type="submit" (click)="onSubmit()">Confirm</button>
+  </div>
+  <div *ngIf="formGroupValid" class="continue-button">
+    <button (click)="onReset()">Continue</button>
   </div>
 </form>

@@ -14,6 +14,11 @@ $card-shadow: drop-shadow(6px 4px 22px #00000022);
   gap: 40px;
   color: white;
   font-weight: lighter;
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
 
   .card-front,
   .card-back {

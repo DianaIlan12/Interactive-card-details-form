@@ -6,14 +6,27 @@
       alt="Card Logo"
     />
     <div class="info-container">
-      <div class="card-number">9591 6489 6389 1010</div>
+      <div class="card-number">
+        {{ cardInfo.cardNumber || defaultCardInfo.cardNumber }}
+      </div>
       <div class="name-date">
-        <div class="name">felicia leire</div>
-        <div class="date">12/04</div>
+        <div class="name">
+          {{ cardInfo.cardName || defaultCardInfo.cardName }}
+        </div>
+        <div class="date">
+          {{
+            cardInfo.expirationDate.month ||
+              defaultCardInfo.expirationDate.month
+          }}
+          /
+          {{
+            cardInfo.expirationDate.year || defaultCardInfo.expirationDate.year
+          }}
+        </div>
       </div>
     </div>
   </div>
   <div class="card-back">
-    <div class="cvc">123</div>
+    <div class="cvc">{{ cardInfo.cvc || defaultCardInfo.cvc }}</div>
   </div>
 </div>
